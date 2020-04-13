@@ -66,6 +66,22 @@ router.put('/:id', (req, res) => {
     db('cars')
         .where( {id: id})
         .update(body)
+        .then( count => {
+            count > 0
+            ? res.status(200).json(
+                { message: 'Updated Successfully!'}
+            )
+            : res.status(404).json(
+                { message: 'The specified ID could not be found'}
+            )
+        })
+        .catch( err => {
+            res.status(500).json(
+                { message: 'The data could not be updated at this time'}
+            )
+        });
 
-})
+});
+
+
 module.exports = router;
